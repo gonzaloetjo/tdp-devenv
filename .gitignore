@@ -1,0 +1,12 @@
+
+# Devenv
+.devenv*
+devenv.local.nix
+tdp-new/
+tdp/
+files/
+tdp*/
+open*/
+plugin*/
+airflow*/
+ansible*/
