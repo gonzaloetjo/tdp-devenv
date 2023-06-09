@@ -24,11 +24,18 @@ in {
       pkgs-stable.nodejs
     ];
 
-    enterShell = ''
-      hello
-      git --version
-      ansible --version
-    '';
+enterShell = ''
+  git --version
+  ansible --version
+  echo -e "\\033[1;34m*********************************************************\\033[0m"
+  echo -e "\\033[1;34m*                                                       *\\033[0m"
+  echo -e "\\033[1;34m*    Welcome to the Nix dev environment for TDP!        *\\033[0m"
+  echo -e "\\033[1;34m*                                                       *\\033[0m"
+  echo -e "\\033[1;34m*    For more information, please visit:                *\\033[0m"
+  echo -e "\\033[1;36m*    https://github.com/TOSIT-IO/tdp-getting-started/   *\\033[0m"
+  echo -e "\\033[1;34m*                                                       *\\033[0m"
+  echo -e "\\033[1;34m*********************************************************\\033[0m"
+'';
 
     # https://devenv.sh/languages/
     # languages.nix.enable = true;
