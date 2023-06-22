@@ -22,20 +22,25 @@ in {
       pkgs-stable.python39Packages.pip
       pkgs-stable.python39Packages.venvShellHook
       pkgs-stable.nodejs
+      pkgs-stable.nodePackages.typescript
     ];
 
-enterShell = ''
-  git --version
-  ansible --version
-  echo -e "\\033[1;34m*********************************************************\\033[0m"
-  echo -e "\\033[1;34m*                                                       *\\033[0m"
-  echo -e "\\033[1;34m*    Welcome to the Nix dev environment for TDP!        *\\033[0m"
-  echo -e "\\033[1;34m*                                                       *\\033[0m"
-  echo -e "\\033[1;34m*    For more information, please visit:                *\\033[0m"
-  echo -e "\\033[1;36m*    https://github.com/TOSIT-IO/tdp-getting-started/   *\\033[0m"
-  echo -e "\\033[1;34m*                                                       *\\033[0m"
-  echo -e "\\033[1;34m*********************************************************\\033[0m"
-'';
+  enterShell = ''
+    echo -e "\\033[1;34m*********************************************************\\033[0m"
+    echo -e "\\033[1;34m*                                                       *\\033[0m"
+    echo -e "\\033[1;34m*    \\033[1;32mWelcome to the Nix dev environment for TDP!\\033[1;34m        *\\033[0m"
+    echo -e "\\033[1;34m*                                                       *\\033[0m"
+    echo -e "\\033[1;34m*    For more information, please visit:                *\\033[0m"
+    echo -e "\\033[1;36m*    https://github.com/TOSIT-IO/tdp-getting-started/   *\\033[0m"
+    echo -e "\\033[1;34m*                                                       *\\033[0m"
+    echo -e "\\033[1;34m*********************************************************\\033[0m"
+    echo -e "\\033[1;33mGit version:\\033[0m"
+    git --version
+    echo -e "\\033[1;33mAnsible version:\\033[0m"
+    ansible --version
+    echo -e "\\033[1;33mPython version:\\033[0m"
+    python --version
+  '';
 
     # https://devenv.sh/languages/
     # languages.nix.enable = true;
