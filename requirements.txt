@@ -1,0 +1,7 @@
+matplotlib
+jmespath
+graphviz 
+poetry
+numpy
+pip
+venvShellHook
