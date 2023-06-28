@@ -12,19 +12,20 @@ echo "${BLUE}+-----------------------+--------------+---------------+-----------
 printf "${BLUE}| %-21s | %-12s | %-13s | %-15s | %-17s |${RESET}\n" "Repository" "Origin Org" "Branch" "Current Commit" "Last Commit Date"
 echo "${BLUE}+-----------------------+--------------+---------------+-----------------+-------------------+${RESET}"
 
-# Get number of organizations
-num_orgs=$(yq e 'length' repos.yaml)
+# Parse JSON file into a variable
+data=$(cat repos.json)
 
-for (( i=0; i<$num_orgs; i++ ))
+# Extract organizations
+orgs=$(echo $data | jq -r '.[] | .org')
+
+for org in $orgs
 do
-  # Get organization and its repos
-  ORGANIZATION=$(yq e ".[$i].org" repos.yaml)
-  num_repos=$(yq e ".[$i].repos | length" repos.yaml)
+  # Get the repos for the organization
+  repos=$(echo $data | jq -r --arg org "$org" '.[] | select(.org == $org) | .repos[]')
 
-  for (( j=0; j<$num_repos; j++ ))
+  for repo in $repos
   do
-    REPO=$(yq e ".[$i].repos[$j]" repos.yaml)
-    repo_dir="${REPO}-${ORGANIZATION}"
+    repo_dir="${repo}-${org}"
     if [ -d "$repo_dir" ]; then
       cd "$repo_dir"
       origin=$(git config --get remote.origin.url)
@@ -32,7 +33,7 @@ do
       branch=$(git rev-parse --abbrev-ref HEAD)
       commit=$(git rev-parse --short HEAD)
       commit_date=$(git show -s --format="%cd" --date=format:"%Y-%m-%d %H:%M" $commit)
-      printf "| %-21s | %-12s | %-13s | %-15s | %-17s |\n" $REPO $origin_org $branch $commit "$commit_date"
+      printf "| %-21s | %-12s | %-13s | %-15s | %-17s |\n" $repo $origin_org $branch $commit "$commit_date"
       echo "${BLUE}+-----------------------+--------------+---------------+-----------------+-------------------+${RESET}"
       cd ..
     else

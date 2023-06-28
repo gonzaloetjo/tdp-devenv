@@ -1,19 +1,24 @@
 #!/usr/bin/env bash
 
-set -e
-
-# Check if YAML file exists
-if [ ! -f "repos.yaml" ]; then
-  echo "repos.yaml file is missing."
+# Check if JSON file exists
+if [ ! -f "repos.json" ]; then
+  echo "repos.json file is missing."
   exit 1
 fi
 
-repos=$(yq e '.repos[]' repos.yaml)
+# Parse JSON file into a variable
+data=$(cat repos.json)
 
-for org_info in "${repos[@]}"; do
-    ORGANIZATION=$(yq e '.org' <<< "$org_info")
-    REPOS=$(yq e '.value[]' <<< "$org_info")
-    for REPO in $REPOS; do
-      git clone https://github.com/$ORGANIZATION/$REPO.git $REPO-$ORGANIZATION
-    done
+# Extract organizations
+orgs=$(echo $data | jq -r '.[] | .org')
+
+for org in $orgs
+do
+  # Get the repos for the organization
+  repos=$(echo $data | jq -r --arg org "$org" '.[] | select(.org == $org) | .repos[]')
+
+  for repo in $repos
+  do
+    git clone https://github.com/$org/$repo.git $repo-$org
+  done
 done

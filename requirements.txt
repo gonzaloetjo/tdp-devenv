@@ -3,5 +3,6 @@ jmespath
 graphviz 
 poetry
 numpy
-pip
 venvShellHook
+pyyaml
+toml
