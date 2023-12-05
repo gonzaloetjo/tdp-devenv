@@ -19,6 +19,10 @@ do
 
   for repo in $repos
   do
-    git clone https://github.com/$org/$repo.git $repo-$org
+    if [ ! -d "$repo-$org" ]; then
+      git clone https://github.com/$org/$repo.git $repo-$org
+    else
+      echo "Repository $repo-$org already exists. Skipping clone."
+    fi
   done
 done

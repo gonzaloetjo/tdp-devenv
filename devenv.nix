@@ -15,30 +15,11 @@ in {
       pkgs.ansible
       pkgs.zip
       pkgs.unzip
+      pkgs.glibc
       pkgs-stable.yq
-      pkgs-stable.glibc
-      pkgs-stable.python39
-      pkgs-stable.python39Packages.matplotlib
-      pkgs-stable.python39Packages.jmespath
-      pkgs-stable.python39Packages.graphviz
-      pkgs-stable.python39Packages.yq
-      pkgs-stable.python39Packages.pyyaml
-      # pkgs-stable.python39Packages.poetry
-      pkgs-stable.python39Packages.numpy
-      pkgs-stable.python39Packages.pip
-      pkgs-stable.python39Packages.venvShellHook
       pkgs-stable.nodejs
       pkgs-stable.nodePackages.typescript
     ];
-
-    # languages.python = {
-    #   enable = true;
-    #   version = "3.9";
-    #   venv.enable = true;
-    #   venv.requirements = ''
-    #     requests
-    #   '';
-    # };
 
     hosts = {
       "worker-01.tdp" = "192.168.56.14";
@@ -81,7 +62,14 @@ in {
     '';
 
     # https://devenv.sh/languages/
-    # languages.nix.enable = true;
+    languages.nix.enable = true;
+    languages.python = {
+      enable = true;
+      version = "3.9.5";
+      poetry.enable = true;
+      poetry.activate.enable = true;
+      poetry.install.enable = true;
+    };
 
     # https://devenv.sh/scripts/
     # scripts.hello.exec = /tdp/scripts/script.sh;

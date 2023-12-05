@@ -10,3 +10,6 @@ open*/
 plugin*/
 airflow*/
 ansible*/
+python*/
+cleanup.sh
+tdp_user.keytab
